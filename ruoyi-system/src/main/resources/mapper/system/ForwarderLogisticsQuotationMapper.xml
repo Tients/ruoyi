@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ForwarderLogisticsQuotationMapper">
+    
+    <resultMap type="ForwarderLogisticsQuotation" id="ForwarderLogisticsQuotationResult">
+        <result property="id"    column="id"    />
+        <result property="shipType"    column="ship_type"    />
+        <result property="destinationCountry"    column="destination_country"    />
+        <result property="destination"    column="destination"    />
+        <result property="zipCodeHead"    column="zip_code_head"    />
+        <result property="price"    column="price"    />
+        <result property="currency"    column="currency"    />
+        <result property="beginValue"    column="begin_value"    />
+        <result property="unit"    column="unit"    />
+        <result property="minAging"    column="min_aging"    />
+        <result property="maxAging"    column="max_aging"    />
+        <result property="remark"    column="remark"    />
+        <result property="haveBattery"    column="have_battery"    />
+        <result property="forwarder"    column="forwarder"    />
+        <result property="createById"    column="create_by_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="isDeleted"    column="is_deleted"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectForwarderLogisticsQuotationVo">
+        select id, ship_type, destination_country, destination, zip_code_head, price, currency, begin_value, unit, min_aging, max_aging, remark, have_battery, forwarder, create_by_id, create_by, update_by, is_deleted, create_time, update_time from forwarder_logistics_quotation
+    </sql>
+
+    <select id="selectForwarderLogisticsQuotationList" parameterType="ForwarderLogisticsQuotation" resultMap="ForwarderLogisticsQuotationResult">
+        <include refid="selectForwarderLogisticsQuotationVo"/>
+        <where>  
+            <if test="shipType != null  and shipType != ''"> and ship_type = #{shipType}</if>
+            <if test="destinationCountry != null  and destinationCountry != ''"> and destination_country = #{destinationCountry}</if>
+            <if test="destination != null  and destination != ''"> and destination = #{destination}</if>
+            <if test="zipCodeHead != null  and zipCodeHead != ''"> and zip_code_head = #{zipCodeHead}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="currency != null  and currency != ''"> and currency = #{currency}</if>
+            <if test="beginValue != null "> and begin_value = #{beginValue}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="minAging != null "> and min_aging = #{minAging}</if>
+            <if test="maxAging != null "> and max_aging = #{maxAging}</if>
+            <if test="haveBattery != null "> and have_battery = #{haveBattery}</if>
+            <if test="forwarder != null  and forwarder != ''"> and forwarder = #{forwarder}</if>
+            <if test="createById != null "> and create_by_id = #{createById}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectForwarderLogisticsQuotationById" parameterType="Long" resultMap="ForwarderLogisticsQuotationResult">
+        <include refid="selectForwarderLogisticsQuotationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertForwarderLogisticsQuotation" parameterType="ForwarderLogisticsQuotation" useGeneratedKeys="true" keyProperty="id">
+        insert into forwarder_logistics_quotation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shipType != null">ship_type,</if>
+            <if test="destinationCountry != null">destination_country,</if>
+            <if test="destination != null">destination,</if>
+            <if test="zipCodeHead != null">zip_code_head,</if>
+            <if test="price != null">price,</if>
+            <if test="currency != null">currency,</if>
+            <if test="beginValue != null">begin_value,</if>
+            <if test="unit != null">unit,</if>
+            <if test="minAging != null">min_aging,</if>
+            <if test="maxAging != null">max_aging,</if>
+            <if test="remark != null">remark,</if>
+            <if test="haveBattery != null">have_battery,</if>
+            <if test="forwarder != null">forwarder,</if>
+            <if test="createById != null">create_by_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shipType != null">#{shipType},</if>
+            <if test="destinationCountry != null">#{destinationCountry},</if>
+            <if test="destination != null">#{destination},</if>
+            <if test="zipCodeHead != null">#{zipCodeHead},</if>
+            <if test="price != null">#{price},</if>
+            <if test="currency != null">#{currency},</if>
+            <if test="beginValue != null">#{beginValue},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="minAging != null">#{minAging},</if>
+            <if test="maxAging != null">#{maxAging},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="haveBattery != null">#{haveBattery},</if>
+            <if test="forwarder != null">#{forwarder},</if>
+            <if test="createById != null">#{createById},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+
+    <update id="updateForwarderLogisticsQuotation" parameterType="ForwarderLogisticsQuotation">
+        update forwarder_logistics_quotation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shipType != null">ship_type = #{shipType},</if>
+            <if test="destinationCountry != null">destination_country = #{destinationCountry},</if>
+            <if test="destination != null">destination = #{destination},</if>
+            <if test="zipCodeHead != null">zip_code_head = #{zipCodeHead},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="currency != null">currency = #{currency},</if>
+            <if test="beginValue != null">begin_value = #{beginValue},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="minAging != null">min_aging = #{minAging},</if>
+            <if test="maxAging != null">max_aging = #{maxAging},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="haveBattery != null">have_battery = #{haveBattery},</if>
+            <if test="forwarder != null">forwarder = #{forwarder},</if>
+            <if test="createById != null">create_by_id = #{createById},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteForwarderLogisticsQuotationById" parameterType="Long">
+        delete from forwarder_logistics_quotation where id = #{id}
+    </delete>
+
+    <delete id="deleteForwarderLogisticsQuotationByIds" parameterType="String">
+        delete from forwarder_logistics_quotation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysForwarderMapper">
+
+
+    <resultMap type="SysForwarder" id="SysForwarderResult">
+        <id     property="forwarderId" column="forwarder_id"     />
+        <result property="forwarderCode" column="forwarder_code"   />
+        <result property="forwarderName" column="forwarder_name"   />
+        <result property="status" column="status"   />
+        <result property="delFlg" column="del_flg"   />
+    </resultMap>
+
+    <sql id="selectForwarderVo">
+        select f.forwarder_id,f.forwarder_code,f.forwarder_name,f.status,f.del_flg,f.remark
+        from sys_forwarder f
+    </sql>
+
+    <select id="selectSysForwarderList" parameterType="SysForwarder" resultMap="SysForwarderResult">
+        <include refid="selectForwarderVo"/>
+        where f.del_flg = '0'
+        <if test="forwarderId != null and forwarderId != 0">
+            AND forwarder_id = #{forwarderId}
+        </if>
+
+        <if test="forwarderCode != null and forwarderCode != 0">
+            AND forwarder_code = #{forwarderCode}
+        </if>
+
+        <if test="forwarderName != null and forwarderName != ''">
+            AND forwarder_name like concat('%', #{forwarderName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by f.forwarder_id
+    </select>
+    
+    <select id="selectSysForwarderByforwarderId" parameterType="Long" resultMap="SysForwarderResult">
+        <include refid="selectForwarderVo"/>
+        where forwarder_id = #{forwarderId}
+    </select>
+
+    <delete id="deleteSysForwarderByforwarderIds" parameterType="Long">
+		update sys_forwarder set del_flg = '2' where forwarder_id in
+        <foreach collection="array" item="forwarderId" open="(" separator="," close=")">
+            #{forwarderId}
+        </foreach>
+	</delete>
+
+
+    <update id="updateSysForwarder" parameterType="SysForwarder" >
+        update sys_forwarder
+        <set>
+            <if test="forwarderName != null and forwarderName != ''">forwarder_name = #{forwarderName},</if>
+            <if test="forwarderCode != null and forwarderCode != ''">forwarder_code = #{forwarderCode},</if>
+            <if test="delFlg != null">del_flg = #{delFlg},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where forwarder_id = #{forwarderId}
+    </update>
+
+    <insert id="insertSysForwarder" parameterType="SysForwarder">
+        insert into sys_forwarder(
+        <if test="forwarderId != null and forwarderId != 0">forwarder_id,</if>
+        <if test="forwarderName != null and forwarderName != ''">forwarder_name,</if>
+        <if test="forwarderCode != null and forwarderCode != ''">forwarder_code,</if>
+        <if test="delFlg != null and delFlg != ''">del_flg,</if>
+        status,
+        create_time
+        )values(
+        <if test="forwarderId != null and forwarderId != 0">#{forwarderId},</if>
+        <if test="forwarderName != null and forwarderName != ''">#{forwarderName},</if>
+        <if test="forwarderCode != null and forwarderCode != ''">#{forwarderCode},</if>
+        <if test="delFlg != null and delFlg != ''">#{delFlg},</if>
+        0,
+        sysdate()
+        )
+    </insert>
+
+</mapper>
